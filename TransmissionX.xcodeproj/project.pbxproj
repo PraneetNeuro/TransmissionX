@@ -11,6 +11,7 @@
 		B71E7EBD26441DA70040658E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71E7EBC26441DA70040658E /* ContentView.swift */; };
 		B71E7EBF26441DAB0040658E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71E7EBE26441DAB0040658E /* Assets.xcassets */; };
 		B71E7EC226441DAB0040658E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71E7EC126441DAB0040658E /* Preview Assets.xcassets */; };
+		B71E7ECC26441F130040658E /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71E7ECB26441F130040658E /* DownloadManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		B71E7EC126441DAB0040658E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B71E7EC326441DAB0040658E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B71E7EC426441DAB0040658E /* TransmissionX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransmissionX.entitlements; sourceTree = "<group>"; };
+		B71E7ECB26441F130040658E /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				B71E7EC326441DAB0040658E /* Info.plist */,
 				B71E7EC426441DAB0040658E /* TransmissionX.entitlements */,
 				B71E7EC026441DAB0040658E /* Preview Content */,
+				B71E7ECB26441F130040658E /* DownloadManager.swift */,
 			);
 			path = TransmissionX;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B71E7EBD26441DA70040658E /* ContentView.swift in Sources */,
+				B71E7ECC26441F130040658E /* DownloadManager.swift in Sources */,
 				B71E7EBB26441DA70040658E /* TransmissionXApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
