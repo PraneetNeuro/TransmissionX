@@ -20,41 +20,35 @@ struct ContentView: View {
                     })
                 })
             }
-            List(downloadManager.downloadQueue, id: \.id) { item in
-                if item.isActive {
+            List(0..<downloadManager.downloadQueue.count, id: \.self) { index in
+                if downloadManager.downloadQueue[index].isActive {
                     VStack(alignment: .leading) {
                         HStack {
-                            Text(item.downloadTask.currentRequest?.url?.absoluteString ?? "")
+                            Text(downloadManager.downloadQueue[index].downloadTask.currentRequest?.url?.absoluteString ?? "")
                                 .lineLimit(1)
-                            if item.isPaused {
+                            if downloadManager.downloadQueue[index].isPaused {
                                 Button(action: {
-                                    for i in 0..<downloadManager.downloadQueue.count where downloadManager.downloadQueue[i].id == item.id {
-                                        downloadManager.downloadQueue[i].isPaused = false
-                                        downloadManager.downloadQueue[i].downloadTask.resume()
-                                    }
+                                    downloadManager.downloadQueue[index].isPaused = false
+                                    downloadManager.downloadQueue[index].downloadTask.resume()
                                 }, label: {
                                     Image(systemName: "play.fill")
                                 })
                             } else {
                                 Button(action: {
-                                    for i in 0..<downloadManager.downloadQueue.count where downloadManager.downloadQueue[i].id == item.id {
-                                        downloadManager.downloadQueue[i].isPaused = true
-                                        downloadManager.downloadQueue[i].downloadTask.suspend()
-                                    }
+                                    downloadManager.downloadQueue[index].isPaused = true
+                                    downloadManager.downloadQueue[index].downloadTask.suspend()
                                 }, label: {
                                     Image(systemName: "pause.fill")
                                 })
                             }
                             Button(action: {
-                                for i in 0..<downloadManager.downloadQueue.count where downloadManager.downloadQueue[i].id == item.id {
-                                    downloadManager.downloadQueue[i].downloadTask.cancel()
-                                    downloadManager.downloadQueue[i].isActive = false
-                                }
+                                downloadManager.downloadQueue[index].isActive = false
+                                downloadManager.downloadQueue[index].downloadTask.cancel()
                             }, label: {
                                 Image(systemName: "xmark.circle")
                             })
                         }
-                        ProgressView(item.downloadTask.progress)
+                        ProgressView(downloadManager.downloadQueue[index].downloadTask.progress)
                             .padding()
                     }
                 }
