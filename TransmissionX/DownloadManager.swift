@@ -9,8 +9,9 @@ import Foundation
 
 class DownloadManager : ObservableObject {
     
-    struct downloadItem {
+    struct DownloadItem {
         let id: UUID = UUID()
+        let url: URL
         var isPaused: Bool = false
         var isActive: Bool = true
         var downloadTask: URLSessionDownloadTask
@@ -19,7 +20,7 @@ class DownloadManager : ObservableObject {
     
     private init() {}
     public static var shared: DownloadManager = DownloadManager()
-    @Published var downloadQueue: [downloadItem] = []
+    @Published var downloadQueue: [DownloadItem] = []
     
     func download(url: String, callback: @escaping (URL) -> ()) {
         guard let url = URL(string: url) else {
@@ -31,8 +32,7 @@ class DownloadManager : ObservableObject {
             callback(url)
         })
         downloadTask.resume()
-        var download = downloadItem(downloadTask: downloadTask, priority: nil)
-        downloadQueue.append(download)
+        downloadQueue.append(DownloadItem(url: url, downloadTask: downloadTask, priority: nil))
     }
     
 }

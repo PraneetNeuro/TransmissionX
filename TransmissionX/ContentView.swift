@@ -51,6 +51,9 @@ struct ContentView: View {
                         ProgressView(downloadManager.downloadQueue[index].downloadTask.progress)
                             .padding()
                     }
+                    .padding()
+                    .background(Color.accentColor.opacity(0.4))
+                    .cornerRadius(6)
                 }
             }
         }
