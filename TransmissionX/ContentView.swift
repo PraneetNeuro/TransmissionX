@@ -13,13 +13,22 @@ struct ContentView: View {
     var body: some View {
         VStack {
             HStack {
+                if let urlFromPasteBoard = NSPasteboard.general.string(forType: .string) {
+                    Button(action: {
+                        downloadURL = urlFromPasteBoard
+                    }, label: {
+                        Image(systemName: "doc.on.clipboard")
+                    })
+                }
                 TextField("Download URL", text: $downloadURL)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
                 Button("Download", action: {
                     DownloadManager.shared.download(url: downloadURL, callback: { url in
                         print(url)
                     })
                 })
             }
+            .padding()
             List(0..<downloadManager.downloadQueue.count, id: \.self) { index in
                 if downloadManager.downloadQueue[index].isActive {
                     VStack(alignment: .leading) {
