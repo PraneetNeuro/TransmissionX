@@ -23,8 +23,25 @@ struct ContentView: View {
                 TextField("Download URL", text: $downloadURL)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 Button("Download", action: {
-                    DownloadManager.shared.download(url: downloadURL, callback: { url in
+                    DownloadManager.shared.download(url: downloadURL, callback: { url, response in
                         print(url)
+                        let filename = ((response as! HTTPURLResponse).allHeaderFields["Content-Disposition"] as? String)?.split(separator: "=")[1]
+                        guard let partialFileName = filename else {
+                            return
+                        }
+                        var dirtyPath: String = String(String(partialFileName).split(separator: " ")[0])
+                        dirtyPath = dirtyPath.replacingOccurrences(of: "%20", with: " ")
+                        dirtyPath = dirtyPath.replacingOccurrences(of: ";", with: "")
+                        dirtyPath = dirtyPath.replacingOccurrences(of: "\"", with: "")
+                        print(dirtyPath)
+                        var localSaveURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
+                        localSaveURL.appendPathComponent(dirtyPath)
+                        do {
+                            try FileManager.default.moveItem(atPath: url.path, toPath: localSaveURL.path)
+                            try FileManager.default.createFile(atPath: localSaveURL.path, contents: Data(contentsOf: url))
+                        } catch {
+                            print(error)
+                        }
                     })
                 })
             }

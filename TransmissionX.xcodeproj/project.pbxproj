@@ -12,6 +12,7 @@
 		B71E7EBF26441DAB0040658E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71E7EBE26441DAB0040658E /* Assets.xcassets */; };
 		B71E7EC226441DAB0040658E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71E7EC126441DAB0040658E /* Preview Assets.xcassets */; };
 		B71E7ECC26441F130040658E /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71E7ECB26441F130040658E /* DownloadManager.swift */; };
+		B763392C26450C3F005ED52E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B763392B26450C3F005ED52E /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		B71E7EC326441DAB0040658E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B71E7EC426441DAB0040658E /* TransmissionX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransmissionX.entitlements; sourceTree = "<group>"; };
 		B71E7ECB26441F130040658E /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		B763392B26450C3F005ED52E /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				B71E7EC426441DAB0040658E /* TransmissionX.entitlements */,
 				B71E7EC026441DAB0040658E /* Preview Content */,
 				B71E7ECB26441F130040658E /* DownloadManager.swift */,
+				B763392B26450C3F005ED52E /* Helpers.swift */,
 			);
 			path = TransmissionX;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 				B71E7EBD26441DA70040658E /* ContentView.swift in Sources */,
 				B71E7ECC26441F130040658E /* DownloadManager.swift in Sources */,
 				B71E7EBB26441DA70040658E /* TransmissionXApp.swift in Sources */,
+				B763392C26450C3F005ED52E /* Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,14 +22,14 @@ class DownloadManager : ObservableObject {
     public static var shared: DownloadManager = DownloadManager()
     @Published var downloadQueue: [DownloadItem] = []
     
-    func download(url: String, callback: @escaping (URL) -> ()) {
+    func download(url: String, callback: @escaping (URL, URLResponse?) -> ()) {
         guard let url = URL(string: url) else {
             return
         }
         let downloadTask: URLSessionDownloadTask = URLSession.shared.downloadTask(with: url, completionHandler: {
             localFileURL, response, error in
             guard let url = localFileURL else { return }
-            callback(url)
+            callback(url, response)
         })
         downloadTask.resume()
         downloadQueue.append(DownloadItem(url: url, downloadTask: downloadTask, priority: nil))
