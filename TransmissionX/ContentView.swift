@@ -63,20 +63,22 @@ struct ContentView: View {
             }
             .padding()
             List(0..<downloadManager.downloadQueue.count, id: \.self) { index in
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text(downloadManager.downloadQueue[index].downloadTask.currentRequest?.url?.absoluteString ?? "")
-                            .lineLimit(1)
-                        if downloadManager.downloadQueue[index].isActive {
-                            DownloadActionsButtonView(index: index)
+                if downloadManager.downloadQueue[index].isActive {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text(downloadManager.downloadQueue[index].downloadTask.currentRequest?.url?.absoluteString ?? "")
+                                .lineLimit(1)
+                            if downloadManager.downloadQueue[index].isActive {
+                                DownloadActionsButtonView(index: index)
+                            }
                         }
+                        ProgressView(downloadManager.downloadQueue[index].downloadTask.progress)
+                            .padding()
                     }
-                    ProgressView(downloadManager.downloadQueue[index].downloadTask.progress)
-                        .padding()
+                    .padding()
+                    .background(downloadManager.downloadQueue[index].isActive ? Color.accentColor.opacity(0.4) : Color.gray.opacity(0.4))
+                    .cornerRadius(6)
                 }
-                .padding()
-                .background(downloadManager.downloadQueue[index].isActive ? Color.accentColor.opacity(0.4) : Color.gray.opacity(0.4))
-                .cornerRadius(6)
             }
             .listStyle(SidebarListStyle())
         }.onReceive(timerPublisher, perform: { _ in
