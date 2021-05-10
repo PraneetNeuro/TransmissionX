@@ -78,6 +78,7 @@ struct ContentView: View {
                 .background(downloadManager.downloadQueue[index].isActive ? Color.accentColor.opacity(0.4) : Color.gray.opacity(0.4))
                 .cornerRadius(6)
             }
+            .listStyle(SidebarListStyle())
         }.onReceive(timerPublisher, perform: { _ in
             if let urlFromPasteBoard = NSPasteboard.general.string(forType: .string) {
                 if urlFromPasteBoard.isValidURL {
