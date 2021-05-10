@@ -37,13 +37,15 @@ struct DownloadActionsButtonView: View {
 
 struct ContentView: View {
     @State var downloadURL: String = ""
+    @State var suggestedURL: String = ""
     @ObservedObject var downloadManager: DownloadManager = DownloadManager.shared
+    let timerPublisher = Timer.TimerPublisher(interval: 1.0, runLoop: .main, mode: .default).autoconnect()
     var body: some View {
         VStack {
             HStack {
-                if let urlFromPasteBoard = NSPasteboard.general.string(forType: .string) {
+                if suggestedURL.count > 0 {
                     Button(action: {
-                        downloadURL = urlFromPasteBoard
+                        downloadURL = suggestedURL
                     }, label: {
                         Image(systemName: "doc.on.clipboard")
                     })
@@ -76,7 +78,13 @@ struct ContentView: View {
                 .background(downloadManager.downloadQueue[index].isActive ? Color.accentColor.opacity(0.4) : Color.gray.opacity(0.4))
                 .cornerRadius(6)
             }
-        }
+        }.onReceive(timerPublisher, perform: { _ in
+            if let urlFromPasteBoard = NSPasteboard.general.string(forType: .string) {
+                if urlFromPasteBoard.isValidURL {
+                    suggestedURL = urlFromPasteBoard
+                }
+            }
+        })
     }
 }
 

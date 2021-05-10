@@ -13,6 +13,7 @@
 		B71E7EC226441DAB0040658E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B71E7EC126441DAB0040658E /* Preview Assets.xcassets */; };
 		B71E7ECC26441F130040658E /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B71E7ECB26441F130040658E /* DownloadManager.swift */; };
 		B763392C26450C3F005ED52E /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B763392B26450C3F005ED52E /* Helpers.swift */; };
+		B76339562648FBB0005ED52E /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76339552648FBB0005ED52E /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		B71E7EC426441DAB0040658E /* TransmissionX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TransmissionX.entitlements; sourceTree = "<group>"; };
 		B71E7ECB26441F130040658E /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		B763392B26450C3F005ED52E /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		B76339552648FBB0005ED52E /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				B71E7EC026441DAB0040658E /* Preview Content */,
 				B71E7ECB26441F130040658E /* DownloadManager.swift */,
 				B763392B26450C3F005ED52E /* Helpers.swift */,
+				B76339552648FBB0005ED52E /* Extensions.swift */,
 			);
 			path = TransmissionX;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B76339562648FBB0005ED52E /* Extensions.swift in Sources */,
 				B71E7EBD26441DA70040658E /* ContentView.swift in Sources */,
 				B71E7ECC26441F130040658E /* DownloadManager.swift in Sources */,
 				B71E7EBB26441DA70040658E /* TransmissionXApp.swift in Sources */,

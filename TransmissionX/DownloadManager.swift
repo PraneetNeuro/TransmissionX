@@ -33,7 +33,9 @@ class DownloadManager : ObservableObject {
             callback(url, response, downloadID)
         })
         downloadTask.resume()
-        downloadQueue.append(DownloadItem(id: downloadID, url: url, downloadTask: downloadTask, priority: nil))
+        DispatchQueue.main.async {
+            self.downloadQueue.append(DownloadItem(id: downloadID, url: url, downloadTask: downloadTask, priority: nil))
+        }
     }
     
 }
