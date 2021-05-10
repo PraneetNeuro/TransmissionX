@@ -7,6 +7,34 @@
 
 import SwiftUI
 
+struct DownloadActionsButtonView: View {
+    var index: Int
+    @ObservedObject var downloadManager: DownloadManager = DownloadManager.shared
+    var body: some View {
+        if downloadManager.downloadQueue[index].isPaused {
+            Button(action: {
+                downloadManager.downloadQueue[index].isPaused = false
+                downloadManager.downloadQueue[index].downloadTask.resume()
+            }, label: {
+                Image(systemName: "play.fill")
+            })
+        } else {
+            Button(action: {
+                downloadManager.downloadQueue[index].isPaused = true
+                downloadManager.downloadQueue[index].downloadTask.suspend()
+            }, label: {
+                Image(systemName: "pause.fill")
+            })
+        }
+        Button(action: {
+            downloadManager.downloadQueue[index].isActive = false
+            downloadManager.downloadQueue[index].downloadTask.cancel()
+        }, label: {
+            Image(systemName: "xmark.circle")
+        })
+    }
+}
+
 struct ContentView: View {
     @State var downloadURL: String = ""
     @ObservedObject var downloadManager: DownloadManager = DownloadManager.shared
@@ -23,64 +51,30 @@ struct ContentView: View {
                 TextField("Download URL", text: $downloadURL)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 Button("Download", action: {
-                    DownloadManager.shared.download(url: downloadURL, callback: { url, response in
-                        print(url)
-                        let filename = ((response as! HTTPURLResponse).allHeaderFields["Content-Disposition"] as? String)?.split(separator: "=")[1]
-                        guard let partialFileName = filename else {
-                            return
+                    DownloadManager.shared.download(url: downloadURL, callback: { url, response, downloadID in
+                        for downloadIndex in 0..<downloadManager.downloadQueue.count where downloadManager.downloadQueue[downloadIndex].id == downloadID {
+                            downloadManager.downloadQueue[downloadIndex].isActive = false
                         }
-                        var dirtyPath: String = String(String(partialFileName).split(separator: " ")[0])
-                        dirtyPath = dirtyPath.replacingOccurrences(of: "%20", with: " ")
-                        dirtyPath = dirtyPath.replacingOccurrences(of: ";", with: "")
-                        dirtyPath = dirtyPath.replacingOccurrences(of: "\"", with: "")
-                        print(dirtyPath)
-                        var localSaveURL = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask)[0]
-                        localSaveURL.appendPathComponent(dirtyPath)
-                        do {
-                            try FileManager.default.moveItem(atPath: url.path, toPath: localSaveURL.path)
-                            try FileManager.default.createFile(atPath: localSaveURL.path, contents: Data(contentsOf: url))
-                        } catch {
-                            print(error)
-                        }
+                        saveToDownloads(url, response)
                     })
                 })
             }
             .padding()
             List(0..<downloadManager.downloadQueue.count, id: \.self) { index in
-                if downloadManager.downloadQueue[index].isActive {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(downloadManager.downloadQueue[index].downloadTask.currentRequest?.url?.absoluteString ?? "")
-                                .lineLimit(1)
-                            if downloadManager.downloadQueue[index].isPaused {
-                                Button(action: {
-                                    downloadManager.downloadQueue[index].isPaused = false
-                                    downloadManager.downloadQueue[index].downloadTask.resume()
-                                }, label: {
-                                    Image(systemName: "play.fill")
-                                })
-                            } else {
-                                Button(action: {
-                                    downloadManager.downloadQueue[index].isPaused = true
-                                    downloadManager.downloadQueue[index].downloadTask.suspend()
-                                }, label: {
-                                    Image(systemName: "pause.fill")
-                                })
-                            }
-                            Button(action: {
-                                downloadManager.downloadQueue[index].isActive = false
-                                downloadManager.downloadQueue[index].downloadTask.cancel()
-                            }, label: {
-                                Image(systemName: "xmark.circle")
-                            })
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text(downloadManager.downloadQueue[index].downloadTask.currentRequest?.url?.absoluteString ?? "")
+                            .lineLimit(1)
+                        if downloadManager.downloadQueue[index].isActive {
+                            DownloadActionsButtonView(index: index)
                         }
-                        ProgressView(downloadManager.downloadQueue[index].downloadTask.progress)
-                            .padding()
                     }
-                    .padding()
-                    .background(Color.accentColor.opacity(0.4))
-                    .cornerRadius(6)
+                    ProgressView(downloadManager.downloadQueue[index].downloadTask.progress)
+                        .padding()
                 }
+                .padding()
+                .background(downloadManager.downloadQueue[index].isActive ? Color.accentColor.opacity(0.4) : Color.gray.opacity(0.4))
+                .cornerRadius(6)
             }
         }
     }
